@@ -1,0 +1,147 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pagerank;
+import java.util.*;
+
+/**
+ *
+ * @author Sanket
+ */
+public class PRank {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Enter total number of pages.. : ");
+        int size = sc.nextInt();
+        
+        int pages[][] = new int[size][size];
+        int outbound[] = new int[size];
+        int inbound[] = new int[size];
+        String [] url = new String[size];
+
+        System.out.println("\nEnter URLs:");
+		for (int i = 0; i < size; i++ )
+		{
+		         url[i] = sc.next();
+		}
+        double[] pr = new double[size];
+        for (int i = 0; i < size; i++) {
+            pr[i] = 1.0/size;
+        }
+
+        System.out.println("Enter 1 to OutBound Links else enter 0 : ");
+        
+        for(int i=0;i<size;i++){
+            for(int j=0;j<size;j++){
+                if(i==j){
+                    pages[i][j] = 0;
+                }
+                else{
+                    System.out.println(i + " " + j +" : ");
+                    pages[i][j] = sc.nextInt();
+                }
+            }
+        }
+         for(int i=0;i<size;i++){
+            System.out.println("Pagerank of " + url[i] + " = " + pr[i]);   
+        }
+        
+        int in=0,out=0;
+        double temp=0;
+      
+        for(int i=0;i<size;i++){
+            for(int j=0;j<size;j++){
+                if(pages[i][j] == 1){
+                    out++;
+                }
+            } 
+            outbound[i]=out;
+
+            out=0;
+        }
+          System.out.println("Second Iteration ");
+
+        for(int i=0;i<size;i++){
+            for(int j=0;j<size;j++){
+                if(pages[j][i] == 1){
+                    in++;
+                    temp += (double) (pr[j]/outbound[j]);
+                }
+            }
+             System.out.println("Pagerank of " + url[i] + " = " + temp);
+                inbound[i] = in;
+
+            in=0;
+            temp=0;
+              
+        }
+        
+    }
+}
+
+/* OUTPUT */
+Enter total number of pages.. : 
+5
+
+Enter URLs:
+www.google.com
+www.yahoo.com
+www.maitpune.com
+www.bing.com
+www.gmail.com
+Enter 1 to OutBound Links else enter 0 : 
+0 1 : 
+1
+0 2 : 
+1
+0 3 : 
+0
+0 4 : 
+0
+1 0 : 
+0
+1 2 : 
+0
+1 3 : 
+0
+1 4 : 
+1
+2 0 : 
+0
+2 1 : 
+0
+2 3 : 
+0
+2 4 : 
+0
+3 0 : 
+1
+3 1 : 
+0
+3 2 : 
+0
+3 4 : 
+1
+4 0 : 
+1
+4 1 : 
+0
+4 2 : 
+0
+4 3 : 
+0
+Pagerank of www.google.com = 0.2
+Pagerank of www.yahoo.com = 0.2
+Pagerank of www.maitpune.com = 0.2
+Pagerank of www.bing.com = 0.2
+Pagerank of www.gmail.com = 0.2
+Second Iteration 
+Pagerank of www.google.com = 0.30000000000000004
+Pagerank of www.yahoo.com = 0.1
+Pagerank of www.maitpune.com = 0.1
+Pagerank of www.bing.com = 0.0
+Pagerank of www.gmail.com = 0.30000000000000004
+BUILD SUCCESSFUL (total time: 1 minute 18 seconds
